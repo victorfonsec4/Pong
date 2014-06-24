@@ -8,17 +8,21 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Grafico extends JFrame
 {
 	List<Imagem> imagensDesenhar;
 	public boolean executar = false;
+	JPanel tela;
 	public Grafico()
 	{
 		super("Pong");
 
 		imagensDesenhar = new ArrayList<Imagem>();
 		Imagem fundoPreto;
+
+		
 
 		try
 		{
