@@ -7,11 +7,8 @@ public class Game
 
 	private void run()
 	{
-		while(true)
-		{
-			update();
-			draw();
-		}
+		update();
+		draw();
 	}
 
 	private void update()
