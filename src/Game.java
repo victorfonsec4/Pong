@@ -13,12 +13,10 @@ public class Game
 {
 	Jogador jogador1;
 	Grafico grafico;
-	Imagem fundoPreto;
 	public Game()
 	{
 		grafico = new Grafico();
 
-		grafico.setSize(1024, 768);
 		grafico.setVisible(true);
 
 		grafico.addKeyListener(new Controle());
@@ -26,7 +24,6 @@ public class Game
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
-			fundoPreto = new Imagem(0, 0, ImageIO.read(new File("imagens/black.jpg")));
 		} 
 		catch(IOException e)
 		{
@@ -56,7 +53,6 @@ public class Game
 
 	private void draw()
 	{
-		grafico.desenhar(fundoPreto);
 		grafico.desenhar(jogador1.imagem);
 		grafico.executar = true;
 		grafico.repaint();

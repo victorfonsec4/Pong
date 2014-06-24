@@ -13,30 +13,34 @@ import javax.swing.JPanel;
 
 public class Grafico extends JFrame
 {
+	public Tela tela;
 	List<Imagem> imagensDesenhar;
 	public boolean executar = false;
-	JPanel tela;
+
 	public Grafico()
 	{
 		super("Pong");
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
+		this.setSize(1024, 768);
+
+
+		tela = new Tela(new BorderLayout());
+		tela.setSize(1024, 768);
+		tela.setBackground(Color.BLACK);
+
+		this.getContentPane().add(tela);
+
+		this.pack();
 
 		imagensDesenhar = new ArrayList<Imagem>();
 		Imagem fundoPreto;
 
-		tela = new JPanel(new BorderLayout());
-		tela.setSize(300, 300);
-		tela.setBackground(Color.BLUE);
-
-		this.add(tela, BorderLayout.CENTER);
-
-
 		try
 		{
 			fundoPreto = new Imagem(0, 0, ImageIO.read(new File("imagens/black.jpg")));
-			//imagensDesenhar.add(fundoPreto);
+			imagensDesenhar.add(fundoPreto);
 		} 
 		catch(IOException e)
 		{
@@ -50,17 +54,26 @@ public class Grafico extends JFrame
 		imagensDesenhar.add(img);
 	}
 
-	public void paint(Graphics g)
+	private class Tela extends JPanel
 	{
-		if(executar)
+		public Tela(BorderLayout b)
 		{
-			for(int i = 0; i < imagensDesenhar.size(); i++)
+			super(b);
+		}
+		public void paintComponent(Graphics g)
+		{
+			super.paintComponent(g);
+
+			if(executar)
 			{
-				Imagem img = imagensDesenhar.get(i);
-				g.drawImage(img.imagem, img.X, img.Y, null);
+				for(int i = 0; i < imagensDesenhar.size(); i++)
+				{
+					Imagem img = imagensDesenhar.get(i);
+					g.drawImage(img.imagem, img.X, img.Y, this);
+				}
+				imagensDesenhar.clear();
+				executar = false;
 			}
-			imagensDesenhar.clear();
-			executar = false;
 		}
 	}
 }
