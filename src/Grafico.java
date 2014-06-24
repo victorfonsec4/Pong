@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -19,15 +20,23 @@ public class Grafico extends JFrame
 	{
 		super("Pong");
 
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new BorderLayout());
+
 		imagensDesenhar = new ArrayList<Imagem>();
 		Imagem fundoPreto;
 
-		
+		tela = new JPanel(new BorderLayout());
+		tela.setSize(300, 300);
+		tela.setBackground(Color.BLUE);
+
+		this.add(tela, BorderLayout.CENTER);
+
 
 		try
 		{
 			fundoPreto = new Imagem(0, 0, ImageIO.read(new File("imagens/black.jpg")));
-			imagensDesenhar.add(fundoPreto);
+			//imagensDesenhar.add(fundoPreto);
 		} 
 		catch(IOException e)
 		{

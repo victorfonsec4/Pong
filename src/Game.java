@@ -17,9 +17,9 @@ public class Game
 	public Game()
 	{
 		grafico = new Grafico();
+
 		grafico.setSize(1024, 768);
 		grafico.setVisible(true);
-		grafico.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		grafico.addKeyListener(new Controle());
 
