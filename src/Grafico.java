@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 public class Grafico extends JFrame
 {
 	List<Imagem> imagensDesenhar;
+	public boolean executar = false;
 	public Grafico()
 	{
 		super("Pong");
@@ -38,9 +39,15 @@ public class Grafico extends JFrame
 
 	public void paint(Graphics g)
 	{
-		for(Imagem img : imagensDesenhar)
+		if(executar)
 		{
-			g.drawImage(img.imagem, img.X, img.Y, null);
+			for(int i = 0; i < imagensDesenhar.size(); i++)
+			{
+				Imagem img = imagensDesenhar.get(i);
+				g.drawImage(img.imagem, img.X, img.Y, null);
+			}
+			imagensDesenhar.clear();
+			executar = false;
 		}
 	}
 }
