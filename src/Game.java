@@ -21,7 +21,7 @@ public class Game
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
-			bola = new Bola(0, 300, ImageIO.read(new File("imagens/ball.jpg")));
+			bola = new Bola(100, 300, ImageIO.read(new File("imagens/ball.jpg")));
 		} 
 		catch(IOException e)
 		{
@@ -52,6 +52,8 @@ public class Game
 			bola.vx *= -1;
 		if(bola.y + bola.rect.height > grafico.size().height || bola.y < 0)
 			bola.vy *= -1;
+		if(bola.rect.intersects(jogador1.rect))
+			bola.vx *= -1;
 	}
 
 	private void draw()
