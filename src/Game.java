@@ -1,18 +1,15 @@
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.EventListener;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
 public class Game
 {
 	Jogador jogador1;
 	Grafico grafico;
+	Bola bola;
 	public Game()
 	{
 		grafico = new Grafico();
@@ -24,6 +21,7 @@ public class Game
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
+			bola = new Bola(0, 300, ImageIO.read(new File("imagens/ball.jpg")));
 		} 
 		catch(IOException e)
 		{
@@ -49,11 +47,13 @@ public class Game
 	private void update()
 	{
 		jogador1.update();
+		bola.update();
 	}
 
 	private void draw()
 	{
 		grafico.desenhar(jogador1.imagem);
+		grafico.desenhar(bola.imagem);
 		grafico.executar = true;
 		grafico.repaint();
 	}
