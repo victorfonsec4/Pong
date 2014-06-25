@@ -48,6 +48,10 @@ public class Game
 	{
 		jogador1.update();
 		bola.update();
+		if(bola.x + bola.rect.width > grafico.size().width || bola.x < 0)
+			bola.vx *= -1;
+		if(bola.y + bola.rect.height > grafico.size().height || bola.y < 0)
+			bola.vy *= -1;
 	}
 
 	private void draw()
