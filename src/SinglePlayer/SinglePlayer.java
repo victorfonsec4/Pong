@@ -18,13 +18,20 @@ public class SinglePlayer extends Thread
 	PanelJogo grafico;
 	PanelManager tela;
 	Bola bola;
+	int numApertadas;
+	boolean subindo, descendo;
 
 	public SinglePlayer(PanelJogo grafico, PanelManager tela)
 	{
 		this.grafico = grafico;
 		this.tela = tela;
 
+		subindo = false;
+		descendo = false;
+
 		tela.addKeyListener(new Controle());
+
+		numApertadas = 0;
 
 		try
 		{
@@ -118,14 +125,32 @@ public class SinglePlayer extends Thread
 		public void keyPressed(KeyEvent e)
 		{
 			if(e.getKeyCode() == KeyEvent.VK_UP && !(jogador1.getY() < 0))
+			{
 				jogador1.subir();
+				subindo = true;
+			}
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.size().height) )
+			{
 				jogador1.descer();
+				descendo = true;
+			}
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
-			jogador1.parar();
+			if(e.getKeyCode() == KeyEvent.VK_UP) 
+			{
+				subindo = false;
+				if(!descendo)
+					jogador1.parar();
+			}
+
+			else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+			{
+				descendo = false;
+				if(!subindo)
+					jogador1.parar();
+			}
 		}
 	}
 
