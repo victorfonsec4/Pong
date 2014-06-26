@@ -23,7 +23,7 @@ public class Game
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
-			jogador2 = new Jogador(grafico.size().width - 100, 300, ImageIO.read(new File("imagens/jogador.png")));
+			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
 			bola = new Bola(100, 300, ImageIO.read(new File("imagens/ball.jpg")));
 		} 
 		catch(IOException e)
@@ -78,6 +78,12 @@ public class Game
 			jogador1.parar();
 		if(jogador1.getY() + jogador1.rect.height > grafico.size().height)
 			jogador1.parar();
+
+		//sistema de pontuação
+		if(bola.x < jogador1.getX())
+			jogador2.pontos++;
+		if(bola.x > jogador2.getX())
+			jogador1.pontos++;
 	}
 
 	private void draw()
@@ -85,6 +91,9 @@ public class Game
 		grafico.desenhar(jogador1.imagem);
 		grafico.desenhar(jogador2.imagem);
 		grafico.desenhar(bola.imagem);
+
+		grafico.score(jogador1.pontos, jogador2.pontos);
+
 		grafico.executar = true;
 		grafico.repaint();
 	}

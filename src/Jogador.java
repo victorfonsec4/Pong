@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 public class Jogador 
 {
-	private int pontos;
+	public int pontos;
 	public Imagem imagem;
 	public Rectangle rect;
 	private int x;
