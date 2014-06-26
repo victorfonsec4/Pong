@@ -41,7 +41,6 @@ public class Jogador
 	public void update()
 	{
 		this.setY(y + dy);
-		this.rect.x = x;
 		this.rect.y = y;
 	}
 	
