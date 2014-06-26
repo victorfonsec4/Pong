@@ -1,11 +1,6 @@
+import javax.swing.JPanel;
 
-public class Menu 
+public class Menu extends JPanel
 {
-	private int opcao;
-
-	public Menu()
-	{
-		opcao = 0;
-	}
 
 }
