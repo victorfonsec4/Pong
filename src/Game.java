@@ -66,9 +66,9 @@ public class Game
 			bola.vx *= -1;
 
 		//"inteligencia artificial" do jogador2
-		if(bola.y == jogador2.getY())
+		if(bola.y >= jogador2.getY() && bola.y <= jogador2.getY() + jogador2.rect.height)
 			jogador2.parar();
-		if(bola.y < jogador2.getY() /*&& !(jogador2.getY() < 0)*/)
+		if(bola.y < jogador2.getY() && !(jogador2.getY() < 0))
 			jogador2.subir();
 		if(bola.y + bola.rect.height > jogador2.getY() + jogador2.rect.height )
 			jogador2.descer();
