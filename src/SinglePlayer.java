@@ -5,20 +5,20 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Game
+public class SinglePlayer extends Thread
 {
 	Jogador jogador1;
 	Jogador jogador2;
-	Grafico grafico;
+	PanelSP grafico;
+	PanelManager tela;
 	Bola bola;
 
-	public Game()
+	public SinglePlayer(PanelSP grafico, PanelManager tela)
 	{
-		grafico = new Grafico();
+		this.grafico = grafico;
+		this.tela = tela;
 
-		grafico.setVisible(true);
-
-		grafico.addKeyListener(new Controle());
+		tela.addKeyListener(new Controle());
 
 		try
 		{
@@ -29,10 +29,9 @@ public class Game
 		catch(IOException e)
 		{
 		}
-		run();
 	}
 
-	private void run()
+	public void run()
 	{
 		while(true)
 		{
@@ -104,6 +103,8 @@ public class Game
 
 		grafico.executar = true;
 		grafico.repaint();
+
+		tela.repaint();
 	}
 
 	private class Controle extends KeyAdapter 
