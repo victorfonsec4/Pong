@@ -1,4 +1,4 @@
-package SinglePlayer;
+package Global;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -7,17 +7,15 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import Global.Imagem;
 
-
-public class PanelSP extends JPanel
+public class PanelJogo extends JPanel
 {
 	List<Imagem> imagensDesenhar;
 	public boolean executar = false;
 	private int pontJogador1, pontJogador2;
 	Font fonte;
 
-	public PanelSP()
+	public PanelJogo()
 	{
 		pontJogador1 = 0;
 		pontJogador2 = 0;

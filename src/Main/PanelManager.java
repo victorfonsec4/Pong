@@ -5,14 +5,14 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
-import SinglePlayer.PanelSP;
+import Global.PanelJogo;
 import SinglePlayer.SinglePlayer;
 
 
 public class PanelManager extends JFrame
 {
 	PanelMenu menuPrincipal;
-	PanelSP telaJogoSP;
+	PanelJogo telaJogoSP;
 	public PanelManager() 
 	{
 		super("Pong");
@@ -23,7 +23,7 @@ public class PanelManager extends JFrame
 		this.setVisible(true);
 
 		menuPrincipal = new PanelMenu();
-		telaJogoSP = new PanelSP();
+		telaJogoSP = new PanelJogo();
 
 
 		this.add(menuPrincipal);
