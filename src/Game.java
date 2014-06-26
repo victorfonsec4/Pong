@@ -54,9 +54,9 @@ public class Game
 		bola.update();
 
 		//logica de colisao da bola com as bordas
-		if(bola.x + bola.rect.width > grafico.size().width || bola.x < 0)
+		if(bola.getX() + bola.rect.width > grafico.size().width || bola.getX() < 0)
 			bola.vx *= -1;
-		if(bola.y + bola.rect.height > grafico.size().height || bola.y < 0)
+		if(bola.getY() + bola.rect.height > grafico.size().height || bola.getY() < 0)
 			bola.vy *= -1;
 
 		//logica de colisao da bola com os jogadores
@@ -66,11 +66,11 @@ public class Game
 			bola.vx *= -1;
 
 		//"inteligencia artificial" do jogador2
-		if(bola.y >= jogador2.getY() && bola.y <= jogador2.getY() + jogador2.rect.height)
+		if(bola.getY() >= jogador2.getY() && bola.getY() <= jogador2.getY() + jogador2.rect.height)
 			jogador2.parar();
-		if(bola.y < jogador2.getY() && !(jogador2.getY() < 0))
+		if(bola.getY() < jogador2.getY() && !(jogador2.getY() < 0))
 			jogador2.subir();
-		if(bola.y + bola.rect.height > jogador2.getY() + jogador2.rect.height )
+		if(bola.getY() + bola.rect.height > jogador2.getY() + jogador2.rect.height )
 			jogador2.descer();
 
 		//limites do movimento do jogador1;
@@ -80,10 +80,18 @@ public class Game
 			jogador1.parar();
 
 		//sistema de pontuação
-		if(bola.x < jogador1.getX())
+		if(bola.getX() < jogador1.getX())
+		{
+			bola.setX(grafico.size().width/2);
+			bola.setY(grafico.size().height/2);
 			jogador2.pontos++;
-		if(bola.x > jogador2.getX())
+		}
+		if(bola.getX() > jogador2.getX())
+		{
+			bola.setX(grafico.size().width/2);
+			bola.setY(grafico.size().height/2);
 			jogador1.pontos++;
+		}
 	}
 
 	private void draw()

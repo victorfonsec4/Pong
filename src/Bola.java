@@ -6,8 +6,8 @@ public class Bola
 {
 	public Imagem imagem;
 	public Rectangle rect;
-	public int x;
-	public int y;
+	private int x;
+	private int y;
 	public int vx;
 	public int vy;
 
@@ -28,6 +28,29 @@ public class Bola
 		imagem.X = x;
 		imagem.Y = y;
 		rect.x = x;
+		rect.y = y;
+	}
+
+	public int getX()
+	{
+		return x;
+	}
+
+	public int getY()
+	{
+		return y;
+	}
+
+	public void setX(int x)
+	{
+		this.x = x;
+		imagem.X = x;
+		rect.x = x;
+	}
+	public void setY(int y)
+	{
+		this.y = y;
+		imagem.Y = y;
 		rect.y = y;
 	}
 }
