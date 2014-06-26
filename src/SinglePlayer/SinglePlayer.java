@@ -8,17 +8,18 @@ import javax.imageio.ImageIO;
 
 import Global.Bola;
 import Global.Jogador;
+import Global.PanelJogo;
 import Main.PanelManager;
 
 public class SinglePlayer extends Thread
 {
 	Jogador jogador1;
 	Jogador jogador2;
-	PanelSP grafico;
+	PanelJogo grafico;
 	PanelManager tela;
 	Bola bola;
 
-	public SinglePlayer(PanelSP grafico, PanelManager tela)
+	public SinglePlayer(PanelJogo grafico, PanelManager tela)
 	{
 		this.grafico = grafico;
 		this.tela = tela;
