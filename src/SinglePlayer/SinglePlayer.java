@@ -10,6 +10,7 @@ import Global.Bola;
 import Global.Jogador;
 import Global.PanelJogo;
 import Main.PanelManager;
+import Main.PanelMenu;
 
 public class SinglePlayer extends Thread
 {
@@ -20,6 +21,7 @@ public class SinglePlayer extends Thread
 	Bola bola;
 	int numApertadas;
 	boolean subindo, descendo;
+	boolean terminar;
 
 	public SinglePlayer(PanelJogo grafico, PanelManager tela)
 	{
@@ -28,6 +30,7 @@ public class SinglePlayer extends Thread
 
 		subindo = false;
 		descendo = false;
+		terminar = false;
 
 		tela.addKeyListener(new Controle());
 
@@ -46,7 +49,7 @@ public class SinglePlayer extends Thread
 
 	public void run()
 	{
-		while(true)
+		while(!terminar)
 		{
 			update();
 			draw();
@@ -133,6 +136,17 @@ public class SinglePlayer extends Thread
 			{
 				jogador1.descer();
 				descendo = true;
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+			{
+				tela.getContentPane().remove(grafico);
+				tela.add(tela.menuPrincipal);
+				tela.getContentPane().invalidate();
+				tela.getContentPane().validate();
+				tela.removeKeyListener(this);
+				tela.addKeyListener(tela.controleMenu);
+				tela.repaint();
+				terminar = true;
 			}
 		}
 
