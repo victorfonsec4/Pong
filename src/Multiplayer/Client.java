@@ -12,28 +12,24 @@ import javax.imageio.ImageIO;
 
 import Global.*;
 
-public class Host
+public class Client
 {
-	private ServerSocket serversocket;
 	private Socket clientsocket;
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
-	private String comandoString;
+	private Info info;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
 	Bola bola;
-	Info info;
 
-	public Host()
+	public Client()
 	{
-		System.err.println("Host");
-		System.err.println("Esperando conex�o");
+		System.err.println("Client");
 		try {
-			serversocket=new ServerSocket(5432);
-			clientsocket=serversocket.accept();
-			inputstream=new ObjectInputStream(clientsocket.getInputStream());
+			clientsocket=new Socket("localhost",5432);
 			outputstream=new ObjectOutputStream(clientsocket.getOutputStream());
+			inputstream=new ObjectInputStream(clientsocket.getInputStream());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -52,7 +48,7 @@ public class Host
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
 			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
 			bola = new Bola(100, 300, ImageIO.read(new File("imagens/ball.jpg")));
-		} 		
+		} 
 		catch(IOException e)
 		{
 		}
@@ -79,50 +75,43 @@ public class Host
 	{
 		System.err.println("Tentando falar");
 		try {
-			comandoString=(String)inputstream.readObject();
-			if(comandoString.equals("parar"))
-				jogador2.parar();
-			else if (comandoString.equals("subir"))
-				jogador2.subir();
-			else if (comandoString.equals("descer"))
-				jogador2.descer();
+			if(jogador2.getdY()==0)
+				outputstream.writeObject("parar");
+			else if(jogador2.getdY()==5)
+				outputstream.writeObject("descer");
+			else
+				outputstream.writeObject("subir");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			info=(Info)inputstream.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		info.dy1=jogador1.getdY();
-		info.bolavx=bola.vx;
-		info.bolavy=bola.vy;
-		try {
-			outputstream.writeObject(info);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if(info.dy1==0)
+			jogador1.parar();
+		else if(info.dy1==5)
+			jogador1.descer();
+		else if(info.dy1==-5)
+			jogador1.subir();
+		bola.vx=info.bolavx;
+		bola.vy=info.bolavy;
 		System.err.println("Falou");
 		jogador1.update();
 		jogador2.update();
 		bola.update();
 
-		//logica de colisao da bola com as bordas
-		if(bola.getX() + bola.rect.width > grafico.size().width || bola.getX() < 0)
-			bola.vx *= -1;
-		if(bola.getY() + bola.rect.height > grafico.size().height || bola.getY() < 0)
-			bola.vy *= -1;
 
-		//logica de colisao da bola com os jogadores
-		if(bola.rect.intersects(jogador1.rect))
-			bola.vx *= -1;
-		if(bola.rect.intersects(jogador2.rect))
-			bola.vx *= -1;
+		//limites do movimento do jogador2;
+		if(jogador2.getY() < 0)
+			jogador2.parar();
+		if(jogador2.getY() + jogador2.rect.height > grafico.size().height)
+			jogador2.parar();
 
-		//limites do movimento do jogador1;
-		if(jogador1.getY() < 0)
-			jogador1.parar();
-		if(jogador1.getY() + jogador1.rect.height > grafico.size().height)
-			jogador1.parar();
-
-		//sistema de pontuacao
+		//sistema de pontuação
 		if(bola.getX() < jogador1.getX())
 		{
 			bola.setX(grafico.size().width/2);
@@ -153,20 +142,21 @@ public class Host
 	{
 		public void keyPressed(KeyEvent e)
 		{
-			if(e.getKeyCode() == KeyEvent.VK_UP && !(jogador1.getY() < 0))
-				jogador1.subir();
-			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.size().height) )
-				jogador1.descer();
+			if(e.getKeyCode() == KeyEvent.VK_UP && !(jogador2.getY() < 0))
+				jogador2.subir();
+			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador2.getY() + jogador2.rect.height > grafico.size().height) )
+				jogador2.descer();
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
-			jogador1.parar();
+			jogador2.parar();
 		}
 	}
 	public static void main(String args[])
 	{
-		Host host=new Host();
+		Client client=new Client();
 	}
+
 
 }
