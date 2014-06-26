@@ -40,7 +40,7 @@ public class SinglePlayer extends Thread
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
 			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
-			bola = new Bola(100, 300, ImageIO.read(new File("imagens/ball.jpg")));
+			bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
 		} 
 		catch(IOException e)
 		{
