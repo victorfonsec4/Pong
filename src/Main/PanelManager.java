@@ -1,8 +1,12 @@
+package Main;
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+
+import SinglePlayer.PanelSP;
+import SinglePlayer.SinglePlayer;
 
 
 public class PanelManager extends JFrame

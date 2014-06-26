@@ -1,9 +1,14 @@
+package SinglePlayer;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import Global.Bola;
+import Global.Jogador;
+import Main.PanelManager;
 
 public class SinglePlayer extends Thread
 {

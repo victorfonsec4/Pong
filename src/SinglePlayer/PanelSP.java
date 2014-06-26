@@ -1,3 +1,4 @@
+package SinglePlayer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -5,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+import Global.Imagem;
 
 
 public class PanelSP extends JPanel

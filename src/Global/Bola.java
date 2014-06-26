@@ -1,3 +1,4 @@
+package Global;
 import java.awt.Image;
 import java.awt.Rectangle;
 
