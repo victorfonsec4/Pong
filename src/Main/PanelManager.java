@@ -11,11 +11,13 @@ import SinglePlayer.SinglePlayer;
 
 public class PanelManager extends JFrame
 {
-	PanelMenu menuPrincipal;
+	public PanelMenu menuPrincipal;
 	PanelJogo telaJogoSP;
+	public ControleMenu controleMenu;
 	public PanelManager() 
 	{
 		super("Pong");
+
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
@@ -25,13 +27,14 @@ public class PanelManager extends JFrame
 		menuPrincipal = new PanelMenu();
 		telaJogoSP = new PanelJogo();
 
+		controleMenu = new ControleMenu();
 
 		this.add(menuPrincipal);
 
-		this.addKeyListener(new ControleMenu());
+		this.addKeyListener(controleMenu);
 	}
 
-	private class ControleMenu extends KeyAdapter 
+	public class ControleMenu extends KeyAdapter 
 	{
 		public void keyPressed(KeyEvent e)
 		{

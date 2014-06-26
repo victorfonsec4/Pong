@@ -10,6 +10,7 @@ import Global.Bola;
 import Global.Jogador;
 import Global.PanelJogo;
 import Main.PanelManager;
+import Main.PanelMenu;
 
 public class SinglePlayer extends Thread
 {
@@ -18,19 +19,28 @@ public class SinglePlayer extends Thread
 	PanelJogo grafico;
 	PanelManager tela;
 	Bola bola;
+	int numApertadas;
+	boolean subindo, descendo;
+	boolean terminar;
 
 	public SinglePlayer(PanelJogo grafico, PanelManager tela)
 	{
 		this.grafico = grafico;
 		this.tela = tela;
 
+		subindo = false;
+		descendo = false;
+		terminar = false;
+
 		tela.addKeyListener(new Controle());
+
+		numApertadas = 0;
 
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
 			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
-			bola = new Bola(100, 300, ImageIO.read(new File("imagens/ball.jpg")));
+			bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
 		} 
 		catch(IOException e)
 		{
@@ -39,7 +49,7 @@ public class SinglePlayer extends Thread
 
 	public void run()
 	{
-		while(true)
+		while(!terminar)
 		{
 			update();
 			draw();
@@ -118,14 +128,43 @@ public class SinglePlayer extends Thread
 		public void keyPressed(KeyEvent e)
 		{
 			if(e.getKeyCode() == KeyEvent.VK_UP && !(jogador1.getY() < 0))
+			{
 				jogador1.subir();
+				subindo = true;
+			}
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.size().height) )
+			{
 				jogador1.descer();
+				descendo = true;
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+			{
+				tela.getContentPane().remove(grafico);
+				tela.add(tela.menuPrincipal);
+				tela.getContentPane().invalidate();
+				tela.getContentPane().validate();
+				tela.removeKeyListener(this);
+				tela.addKeyListener(tela.controleMenu);
+				tela.repaint();
+				terminar = true;
+			}
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
-			jogador1.parar();
+			if(e.getKeyCode() == KeyEvent.VK_UP) 
+			{
+				subindo = false;
+				if(!descendo)
+					jogador1.parar();
+			}
+
+			else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+			{
+				descendo = false;
+				if(!subindo)
+					jogador1.parar();
+			}
 		}
 	}
 
