@@ -26,6 +26,7 @@ public class PanelManager extends JFrame
 		this.setLayout(new BorderLayout());
 		this.setSize(new Dimension(1200, 700));
 		this.setVisible(true);
+		this.setResizable(false);
 
 		panelSP=new PanelJogo();
 		panelMPHost=new PanelJogo();
