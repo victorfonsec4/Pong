@@ -1,11 +1,7 @@
 package Global;
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +10,7 @@ import javax.swing.JPanel;
 
 public class PanelJogo extends JPanel
 {
+	private static final long serialVersionUID = 649474721633315529L;
 	List<Imagem> imagensDesenhar;
 	List<Imagem> efeitoBola;
 	public boolean executar = false;

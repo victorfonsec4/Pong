@@ -12,6 +12,7 @@ import SinglePlayer.SinglePlayer;
 
 public class PanelManager extends JFrame
 {
+	private static final long serialVersionUID = 5523431677817125277L;
 	public PanelMenu menuPrincipal;
 	public ControleMenu controleMenu;
 	public PanelJogo panelSP,panelMPHost,panelMPClient;
