@@ -81,11 +81,7 @@ public class SinglePlayer extends Thread
 			bola.vx += 1;
 			if (boost == true)
 				bola.vx += 2;
-			if(apertouUP == true)
-				bola.vy += 3;
-			if(apertouDOWN == true)
-				bola.vy -= 3;
-			bola.vy += -(jogador1.getY() - jogador1.rect.getHeight()/2 - bola.getY())/50;
+			bola.vy = -(int)(jogador1.getY() - jogador1.rect.getHeight()/2 - bola.getY())/50;
 		}
 		if(bola.rect.intersects(jogador2.rect))
 			bola.vx *= -1;

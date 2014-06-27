@@ -116,11 +116,7 @@ public class Host extends Thread
 			bola.vx += 1;
 			if (boost == true)
 				bola.vx += 2;
-			if(apertouUP == true)
-				bola.vy += 3;
-			if(apertouDOWN == true)
-				bola.vy -= 3;
-			bola.vy += -(jogador1.getY() - jogador1.rect.getHeight()/2 - bola.getY())/50;
+			bola.vy = -(int)(jogador1.getY() - jogador1.rect.getHeight()/2 - bola.getY())/50;
 		}
 		if(bola.rect.intersects(jogador2.rect))
 		{
@@ -128,11 +124,7 @@ public class Host extends Thread
 			bola.vx -= 1;
 			if(outroBoost == true)
 				bola.vx -= 2;
-			if(outroApertouUP == true)
-				bola.vy += 3;
-			if(outroApertouDOWN == true)
-				bola.vy -= 3;
-			bola.vy += -(jogador2.getY() - jogador2.rect.getHeight()/2 - bola.getY())/50;
+			bola.vy = -(int)(jogador2.getY() - jogador2.rect.getHeight()/2 - bola.getY())/50;
 		}
 
 		//limites do movimento do jogador1;
