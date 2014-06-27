@@ -19,7 +19,7 @@ public class Host extends Thread
 	private Socket clientsocket;
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
-	private Integer posOutro;
+	private Integer posOutro=300;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
