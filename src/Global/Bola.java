@@ -27,7 +27,6 @@ public class Bola
 	{
 		if(Math.abs(vx)>12)
 			vx=7.5*Math.signum(vx);
-		System.out.println(""+vx);
 		x += vx;
 		y += vy;
 		imagem.X = (int) x;
