@@ -10,7 +10,6 @@ import Global.Bola;
 import Global.Jogador;
 import Global.PanelJogo;
 import Main.PanelManager;
-import Main.PanelMenu;
 
 public class SinglePlayer extends Thread
 {
@@ -36,42 +35,42 @@ public class SinglePlayer extends Thread
 
 		numApertadas = 0;
 
-		try
-		{
-			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
-			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
-			bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
-		} 
-		catch(IOException e)
-		{
-		}
-	}
-
-	public void run()
-	{
-		while(!terminar)
-		{
-			update();
-			draw();
-
-			try {
-				Thread.sleep(10);
-			} catch(InterruptedException ex) {
-				Thread.currentThread().interrupt();
+			try
+			{
+				jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
+				jogador2 = new Jogador(grafico.getWidth() - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
+				bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
+			} 
+			catch(IOException e)
+			{
 			}
 		}
-	}
 
-	private void update()
-	{
-		jogador1.update();
-		jogador2.update();
-		bola.update();
+		public void run()
+		{
+			while(!terminar)
+			{
+				update();
+				draw();
 
-		//logica de colisao da bola com as bordas
-		if(bola.getX() + bola.rect.width > grafico.size().width || bola.getX() < 0)
+				try {
+					Thread.sleep(10);
+				} catch(InterruptedException ex) {
+					Thread.currentThread().interrupt();
+				}
+			}
+		}
+
+		private void update()
+		{
+			jogador1.update();
+			jogador2.update();
+			bola.update();
+
+			//logica de colisao da bola com as bordas
+			if(bola.getX() + bola.rect.width > grafico.getWidth() || bola.getX() < 0)
 			bola.vx *= -1;
-		if(bola.getY() + bola.rect.height > grafico.size().height || bola.getY() < 0)
+		if(bola.getY() + bola.rect.height > grafico.getHeight() || bola.getY() < 0)
 			bola.vy *= -1;
 
 		//logica de colisao da bola com os jogadores
@@ -132,7 +131,7 @@ public class SinglePlayer extends Thread
 				jogador1.subir();
 				subindo = true;
 			}
-			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.size().height) )
+			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.getHeight()) )
 			{
 				jogador1.descer();
 				descendo = true;
