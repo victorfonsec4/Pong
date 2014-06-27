@@ -20,6 +20,9 @@ public class SinglePlayer extends Thread
 	Bola bola;
 	boolean subindo, descendo;
 	boolean terminar;
+	boolean apertouUP = false;
+	boolean apertouDOWN = false;
+	boolean boost = false;
 
 	public SinglePlayer(PanelJogo grafico, PanelManager tela)
 	{
@@ -73,7 +76,17 @@ public class SinglePlayer extends Thread
 
 		//logica de colisao da bola com os jogadores
 		if(bola.rect.intersects(jogador1.rect))
+		{
 			bola.vx *= -1;
+			bola.vx += 1;
+			if (boost == true)
+				bola.vx += 2;
+			if(apertouUP == true)
+				bola.vy += 3;
+			if(apertouDOWN == true)
+				bola.vy -= 3;
+			bola.vy += -(jogador1.getY() - jogador1.rect.getHeight()/2 - bola.getY())/50;
+		}
 		if(bola.rect.intersects(jogador2.rect))
 			bola.vx *= -1;
 
@@ -96,12 +109,16 @@ public class SinglePlayer extends Thread
 		{
 			bola.setX(grafico.getWidth()/2);
 			bola.setY(grafico.getHeight()/2);
+			bola.vx=3;
+			bola.vy=3;
 			jogador2.pontos++;
 		}
 		if(bola.getX() + bola.rect.width > jogador2.getX() + jogador2.rect.getWidth())
 		{
 			bola.setX(grafico.getWidth()/2);
 			bola.setY(grafico.getHeight()/2);
+			bola.vx=3;
+			bola.vy=3;
 			jogador1.pontos++;
 		}
 	}
@@ -125,27 +142,36 @@ public class SinglePlayer extends Thread
 			{
 				jogador1.subir();
 				subindo = true;
+				apertouUP = true;
 			}
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.getHeight()) )
 			{
 				jogador1.descer();
 				descendo = true;
+				apertouDOWN = true;
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_SPACE)
+			{
+				boost = true;
 			}
 			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 			{
 				tela.getContentPane().remove(grafico);
 				tela.add(tela.menuPrincipal);
-			tela.getContentPane().invalidate();
-			tela.getContentPane().validate();
-			tela.removeKeyListener(this);
-			tela.addKeyListener(tela.controleMenu);
-			tela.repaint();
-			terminar = true;
+				tela.getContentPane().invalidate();
+				tela.getContentPane().validate();
+				tela.removeKeyListener(this);
+				tela.addKeyListener(tela.controleMenu);
+				tela.repaint();
+				terminar = true;
 			}
 		}
 	
 		public void keyReleased(KeyEvent e)
 		{
+			apertouDOWN = false;
+			apertouUP = false;
+			boost = false;
 			if(e.getKeyCode() == KeyEvent.VK_UP) 
 			{
 				subindo = false;

@@ -27,7 +27,12 @@ public class Host extends Thread
 	Bola bola;
 	boolean subindo, descendo;
 	boolean terminar,ready;
-	
+	boolean apertouUP = false;
+	boolean apertouDOWN = false;
+	boolean boost = false;
+	boolean outroApertouUP = false;
+	boolean outroApertouDOWN = false;
+	boolean outroBoost = false;
 
 	public Host(PanelJogo grafico, PanelManager tela)
 	{
@@ -106,9 +111,29 @@ public class Host extends Thread
 
 		//logica de colisao da bola com os jogadores
 		if(bola.rect.intersects(jogador1.rect))
+		{
 			bola.vx *= -1;
+			bola.vx += 1;
+			if (boost == true)
+				bola.vx += 2;
+			if(apertouUP == true)
+				bola.vy += 3;
+			if(apertouDOWN == true)
+				bola.vy -= 3;
+			bola.vy += -(jogador1.getY() - jogador1.rect.getHeight()/2 - bola.getY())/50;
+		}
 		if(bola.rect.intersects(jogador2.rect))
+		{
 			bola.vx *= -1;
+			bola.vx -= 1;
+			if(outroBoost == true)
+				bola.vx -= 2;
+			if(outroApertouUP == true)
+				bola.vy += 3;
+			if(outroApertouDOWN == true)
+				bola.vy -= 3;
+			bola.vy += -(jogador2.getY() - jogador2.rect.getHeight()/2 - bola.getY())/50;
+		}
 
 		//limites do movimento do jogador1;
 		if(jogador1.getY() < 0)
@@ -121,12 +146,16 @@ public class Host extends Thread
 		{
 			bola.setX(grafico.getWidth()/2);
 			bola.setY(grafico.getHeight()/2);
+			bola.vx=3;
+			bola.vy=3;
 			jogador2.pontos++;
 		}
 		if(bola.getX() + bola.rect.width > jogador2.getX() + jogador2.rect.getWidth())
 		{
 			bola.setX(grafico.getWidth()/2);
 			bola.setY(grafico.getHeight()/2);
+			bola.vx=3;
+			bola.vy=3;
 			jogador1.pontos++;
 		}
 	}
@@ -153,11 +182,17 @@ public class Host extends Thread
 			{
 				jogador1.subir();
 				subindo = true;
+				apertouUP = true;
 			}
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.size().height) )
 			{
 				jogador1.descer();
 				descendo = true;
+				apertouDOWN = true;
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_SPACE)
+			{
+				boost = true;
 			}
 			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 			{
@@ -174,6 +209,9 @@ public class Host extends Thread
 
 		public void keyReleased(KeyEvent e)
 		{
+			apertouDOWN = false;
+			apertouUP = false;
+			boost = false;
 			if(e.getKeyCode() == KeyEvent.VK_UP) 
 			{
 				subindo = false;
@@ -240,6 +278,9 @@ public class Host extends Thread
 			{
 				try {
 					posOutro=(Integer)inputstream.readObject();
+					outroApertouUP=(Boolean)inputstream.readObject();
+					outroApertouDOWN=(Boolean)inputstream.readObject();
+					outroBoost=(Boolean)inputstream.readObject();
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
