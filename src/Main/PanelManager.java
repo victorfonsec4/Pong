@@ -24,7 +24,7 @@ public class PanelManager extends JFrame
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
-		this.setSize(new Dimension(1366, 768));
+		this.setSize(new Dimension(1200, 700));
 		this.setVisible(true);
 
 		panelSP=new PanelJogo();
