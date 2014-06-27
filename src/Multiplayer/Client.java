@@ -81,6 +81,7 @@ public class Client extends Thread
 
 	private void update()
 	{
+		jogador1.setY(posOutro);
 		jogador2.update();
 		bola.update();
 
@@ -208,7 +209,6 @@ public class Client extends Thread
 			{
 				try {
 					posOutro=(Integer)inputstream.readObject();
-					jogador1.setY(posOutro);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

@@ -85,6 +85,7 @@ public class Host extends Thread
 	private void update()
 	{
 		jogador1.update();
+		jogador2.setY(posOutro);
 		bola.update();
 
 		//logica de colisao da bola com as bordas
@@ -211,7 +212,6 @@ public class Host extends Thread
 			{
 				try {
 					posOutro=(Integer)inputstream.readObject();
-					jogador2.setY(posOutro);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
