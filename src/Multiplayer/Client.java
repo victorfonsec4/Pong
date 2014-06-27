@@ -127,17 +127,17 @@ public class Client extends Thread
 		if(jogador2.getY() + jogador2.rect.height > grafico.size().height)
 			jogador2.parar();
 
-		//sistema de pontuação
+		//sistema de pontuacao
 		if(bola.getX() < jogador1.getX())
 		{
-			bola.setX(grafico.size().width/2);
-			bola.setY(grafico.size().height/2);
+			bola.setX(grafico.getWidth()/2);
+			bola.setY(grafico.getHeight()/2);
 			jogador2.pontos++;
 		}
-		if(bola.getX() > jogador2.getX())
+		if(bola.getX() + bola.rect.width > jogador2.getX() + jogador2.rect.getWidth())
 		{
-			bola.setX(grafico.size().width/2);
-			bola.setY(grafico.size().height/2);
+			bola.setX(grafico.getWidth()/2);
+			bola.setY(grafico.getHeight()/2);
 			jogador1.pontos++;
 		}
 	}
@@ -146,7 +146,7 @@ public class Client extends Thread
 	{
 		grafico.desenhar(jogador1.imagem);
 		grafico.desenhar(jogador2.imagem);
-		grafico.desenhar(bola.imagem);
+		grafico.desenhar(bola.imagem.Clone());
 
 		grafico.score(jogador1.pontos, jogador2.pontos);
 

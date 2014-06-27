@@ -93,7 +93,7 @@ public class SinglePlayer extends Thread
 		if(jogador1.getY() + jogador1.rect.height > grafico.getHeight())
 			jogador1.parar();
 
-		//sistema de pontuação
+		//sistema de pontuacao
 		if(bola.getX() < jogador1.getX())
 		{
 			bola.setX(grafico.getWidth()/2);
