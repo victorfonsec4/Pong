@@ -1,7 +1,11 @@
 package Global;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +15,7 @@ import javax.swing.JPanel;
 public class PanelJogo extends JPanel
 {
 	List<Imagem> imagensDesenhar;
+	List<Imagem> efeitoBola;
 	public boolean executar = false;
 	private int pontJogador1, pontJogador2;
 	Font fonte;
@@ -24,6 +29,7 @@ public class PanelJogo extends JPanel
 
 		this.setBackground(Color.BLACK);
 		imagensDesenhar = new ArrayList<Imagem>();
+		efeitoBola = new ArrayList<Imagem>();
 	}
 
 	public void score(int p1, int p2)
@@ -37,23 +43,38 @@ public class PanelJogo extends JPanel
 		imagensDesenhar.add(img);
 	}
 
+	public void desenharBola(Imagem bola)
+	{
+		efeitoBola.add(0, bola);
+		if(efeitoBola.size() > 10)
+			efeitoBola.remove(efeitoBola.size() - 1);
+	}
+
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 
 		g.setFont(fonte);
 		g.setColor(Color.WHITE);
-		g.drawString("" + pontJogador1, this.size().width/2 - this.size().width/5, this.size().height*1/3);
-		g.drawString("" + pontJogador2, this.size().width/2, this.size().height*1/3);
+		g.drawString("" + pontJogador1, this.getWidth()/2 - this.getHeight()/5, this.getHeight()*1/3);
+		g.drawString("" + pontJogador2, this.getWidth()/2, this.getHeight()*1/3);
 
 		if(executar)
 		{
-			for(int i = 0; i < imagensDesenhar.size(); i++)
+			for(int i = imagensDesenhar.size() - 1; i >= 0; i--)
 			{
 				Imagem img = imagensDesenhar.get(i);
 				g.drawImage(img.imagem, img.X, img.Y, this);
 			}
 			imagensDesenhar.clear();
+
+			for(int i = efeitoBola.size() - 1; i >= 0; i--)
+			{
+				Imagem img = efeitoBola.get(i);
+				g.setColor(new Color(255 - 25*i, 255 - 25*i, 255 - 25*i));
+				g.fillRect(img.X, img.Y, img.imagem.getWidth(), img.imagem.getHeight());
+			}
+
 			executar = false;
 		}
 	}
