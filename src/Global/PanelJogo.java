@@ -53,8 +53,8 @@ public class PanelJogo extends JPanel
 
 		g.setFont(fonte);
 		g.setColor(Color.WHITE);
-		g.drawString("" + pontJogador1, this.getWidth()/2 - this.getHeight()/5, this.getHeight()*1/3);
-		g.drawString("" + pontJogador2, this.getWidth()/2, this.getHeight()*1/3);
+		g.drawString("" + pontJogador1, this.getWidth()/2 - this.getHeight()/5 - 200, this.getHeight()*1/3);
+		g.drawString("" + pontJogador2, this.getWidth()/2 + 200, this.getHeight()*1/3);
 
 		if(executar)
 		{
