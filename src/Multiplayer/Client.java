@@ -66,6 +66,14 @@ public class Client extends Thread
 	{
 		(new Send()).start();
 		(new Listen()).start();
+		try {
+			outputstream.writeObject("podago?");
+			inputstream.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		while(!terminar)
 		{
 			update();
