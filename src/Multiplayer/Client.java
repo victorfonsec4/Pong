@@ -18,11 +18,11 @@ public class Client extends Thread
 	private Socket clientsocket;
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
-	private Integer posOutro=300;
-	private Integer xbola=100;
-	private Integer ybola=300;
-	private Integer j1p=300;
-	private Integer j2p=300;
+	private Double posOutro=(double) 300;
+	private Double xbola=(double) 100;
+	private Double ybola=(double) 300;
+	private Integer j1p=0;
+	private Integer j2p=0;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
@@ -226,9 +226,9 @@ public class Client extends Thread
 			while(true)
 			{
 				try {
-					posOutro=(Integer)inputstream.readObject();
-					xbola=(Integer)inputstream.readObject();
-					ybola=(Integer)inputstream.readObject();
+					posOutro=(Double)inputstream.readObject();
+					xbola=(Double)inputstream.readObject();
+					ybola=(Double)inputstream.readObject();
 					j1p=(Integer)inputstream.readObject();
 					j2p=(Integer)inputstream.readObject();
 				} catch (ClassNotFoundException e) {

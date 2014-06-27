@@ -19,7 +19,7 @@ public class Host extends Thread
 	private Socket clientsocket;
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
-	private Integer posOutro=300;
+	private Double posOutro=(double) 300;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
@@ -267,7 +267,7 @@ public class Host extends Thread
 			while(true)
 			{
 				try {
-					posOutro=(Integer)inputstream.readObject();
+					posOutro=(Double)inputstream.readObject();
 					outroApertouUP=(Boolean)inputstream.readObject();
 					outroApertouDOWN=(Boolean)inputstream.readObject();
 					outroBoost=(Boolean)inputstream.readObject();
