@@ -26,7 +26,7 @@ public class Host extends Thread
 	PanelManager tela;
 	Bola bola;
 	boolean subindo, descendo;
-	boolean terminar;
+	boolean terminar,ready;
 	
 
 	public Host(PanelJogo grafico, PanelManager tela)
@@ -51,7 +51,8 @@ public class Host extends Thread
 		subindo = false;
 		descendo = false;
 		terminar = false;
-
+		ready=false;
+		
 		tela.addKeyListener(new Controle());
 
 		try
@@ -72,6 +73,7 @@ public class Host extends Thread
 		try {
 			outputstream.writeObject("podago?");
 			inputstream.readObject();
+			ready=true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -194,6 +196,13 @@ public class Host extends Thread
 		}
 		public void run()
 		{
+			while(!ready){
+				try {
+					this.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			while(true)
 			{
 				try {
@@ -216,6 +225,13 @@ public class Host extends Thread
 		}
 		public void run()
 		{
+			while(!ready){
+				try {
+					this.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			while(true)
 			{
 				try {

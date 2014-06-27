@@ -25,7 +25,7 @@ public class Client extends Thread
 	PanelManager tela;
 	Bola bola;
 	boolean subindo, descendo;
-	boolean terminar;
+	boolean terminar,ready;
 
 	public Client(PanelJogo grafico, PanelManager tela)
 	{
@@ -47,6 +47,7 @@ public class Client extends Thread
 		subindo = false;
 		descendo = false;
 		terminar = false;
+		ready=false;
 
 		tela.addKeyListener(new Controle());
 
@@ -69,6 +70,7 @@ public class Client extends Thread
 		try {
 			outputstream.writeObject("podago?");
 			inputstream.readObject();
+			ready=true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -191,6 +193,13 @@ public class Client extends Thread
 		}
 		public void run()
 		{
+			while(!ready){
+				try {
+					this.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			while(true)
 			{
 				try {
@@ -213,6 +222,13 @@ public class Client extends Thread
 		}
 		public void run()
 		{
+			while(!ready){
+				try {
+					this.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			while(true)
 			{
 				try {
