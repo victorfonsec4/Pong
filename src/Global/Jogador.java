@@ -41,7 +41,8 @@ public class Jogador
 	public void setY(int y)
 	{
 		this.y = y;
-		imagem.Y = y;
+		this.imagem.Y = y;
+		this.rect.y = y;
 	}
 
 	public void update()
