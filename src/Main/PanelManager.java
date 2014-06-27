@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Global.PanelJogo;
 import Multiplayer.*;
@@ -17,6 +18,7 @@ public class PanelManager extends JFrame
 	public PanelMenu menuPrincipal;
 	public ControleMenu controleMenu;
 	public PanelJogo panelSP,panelMPHost,panelMPClient;
+	public String ip;
 	public PanelManager() 
 	{
 		super("Pong");
@@ -31,6 +33,7 @@ public class PanelManager extends JFrame
 		panelSP=new PanelJogo();
 		panelMPHost=new PanelJogo();
 		panelMPClient=new PanelJogo();
+		//ip = JOptionPane.showInputDialog("Insira ip do servidor");
 		
 		menuPrincipal = new PanelMenu();
 
