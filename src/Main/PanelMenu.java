@@ -52,6 +52,7 @@ public class PanelMenu extends JPanel
 			g.setColor(Color.WHITE);
 		g.drawString("Single Player", this.getWidth()/2 - this.getWidth()/5, this.getHeight()*1/3);
 
+
 		if(opcao == 1)
 			g.setColor(Color.RED);
 		else
@@ -69,6 +70,7 @@ public class PanelMenu extends JPanel
 		else
 			g.setColor(Color.WHITE);
 		g.drawString("Exit", this.getWidth()/2 - this.getWidth()/5, this.getHeight()*1/3 + this.getHeight()*3/7);
+
 	}
 
 }
