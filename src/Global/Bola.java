@@ -54,4 +54,5 @@ public class Bola
 		imagem.Y = y;
 		rect.y = y;
 	}
+
 }

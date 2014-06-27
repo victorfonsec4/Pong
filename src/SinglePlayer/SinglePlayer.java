@@ -91,20 +91,20 @@ public class SinglePlayer extends Thread
 		//limites do movimento do jogador1;
 		if(jogador1.getY() < 0)
 			jogador1.parar();
-		if(jogador1.getY() + jogador1.rect.height > grafico.size().height)
+		if(jogador1.getY() + jogador1.rect.height > grafico.getHeight())
 			jogador1.parar();
 
 		//sistema de pontuação
 		if(bola.getX() < jogador1.getX())
 		{
-			bola.setX(grafico.size().width/2);
-			bola.setY(grafico.size().height/2);
+			bola.setX(grafico.getWidth()/2);
+			bola.setY(grafico.getHeight()/2);
 			jogador2.pontos++;
 		}
-		if(bola.getX() > jogador2.getX())
+		if(bola.getX() + bola.rect.width > jogador2.getX() + jogador2.rect.getWidth())
 		{
-			bola.setX(grafico.size().width/2);
-			bola.setY(grafico.size().height/2);
+			bola.setX(grafico.getWidth()/2);
+			bola.setY(grafico.getHeight()/2);
 			jogador1.pontos++;
 		}
 	}
@@ -113,7 +113,7 @@ public class SinglePlayer extends Thread
 	{
 		grafico.desenhar(jogador1.imagem);
 		grafico.desenhar(jogador2.imagem);
-		grafico.desenhar(bola.imagem);
+		grafico.desenharBola(bola.imagem.clone());
 
 		grafico.score(jogador1.pontos, jogador2.pontos);
 
