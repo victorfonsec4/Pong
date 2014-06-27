@@ -25,6 +25,8 @@ public class Bola
 
 	public void update()
 	{
+		if(Math.abs(vx)>3.8)
+			vx=3.8*Math.signum(vx);
 		x += vx;
 		y += vy;
 		imagem.X = (int) x;
