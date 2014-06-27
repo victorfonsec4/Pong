@@ -27,22 +27,20 @@ public class SinglePlayer extends Thread
 		this.tela = tela;
 
 		tela.add(grafico);
-		
+
 		subindo = false;
 		descendo = false;
 		terminar = false;
 
 		tela.addKeyListener(new Controle());
-		
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
-			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
+			jogador2 = new Jogador(grafico.getWidth() - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
 			bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
 		} 
 		catch(IOException e)
 		{
-			
 		}
 	}
 
@@ -113,12 +111,9 @@ public class SinglePlayer extends Thread
 		grafico.desenhar(jogador1.imagem);
 		grafico.desenhar(jogador2.imagem);
 		grafico.desenharBola(bola.imagem.Clone());
-
 		grafico.score(jogador1.pontos, jogador2.pontos);
-
 		grafico.executar = true;
 		grafico.repaint();
-
 		tela.repaint();
 	}
 
@@ -140,15 +135,15 @@ public class SinglePlayer extends Thread
 			{
 				tela.getContentPane().remove(grafico);
 				tela.add(tela.menuPrincipal);
-				tela.getContentPane().invalidate();
-				tela.getContentPane().validate();
-				tela.removeKeyListener(this);
-				tela.addKeyListener(tela.controleMenu);
-				tela.repaint();
-				terminar = true;
+			tela.getContentPane().invalidate();
+			tela.getContentPane().validate();
+			tela.removeKeyListener(this);
+			tela.addKeyListener(tela.controleMenu);
+			tela.repaint();
+			terminar = true;
 			}
 		}
-
+	
 		public void keyReleased(KeyEvent e)
 		{
 			if(e.getKeyCode() == KeyEvent.VK_UP) 
@@ -157,7 +152,6 @@ public class SinglePlayer extends Thread
 				if(!descendo)
 					jogador1.parar();
 			}
-
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN )
 			{
 				descendo = false;
@@ -166,5 +160,4 @@ public class SinglePlayer extends Thread
 			}
 		}
 	}
-
 }
