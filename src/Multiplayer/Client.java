@@ -49,8 +49,6 @@ public class Client extends Thread
 		this.grafico = grafico;
 		this.tela = tela;
 		
-		tela.add(grafico);
-		
 		subindo = false;
 		descendo = false;
 		terminar = false;

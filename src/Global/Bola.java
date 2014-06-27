@@ -8,17 +8,17 @@ public class Bola
 {
 	public Imagem imagem;
 	public Rectangle rect;
-	private int x;
-	private int y;
-	public int vx;
-	public int vy;
+	private double x;
+	private double y;
+	public double vx;
+	public double vy;
 
 	public Bola(int x, int y, Image image)
 	{
 		this.x = x;
 		this.y = y;
-		vx = -3;
-		vy = 3;
+		vx = 2;
+		vy = 2;
 		imagem = new Imagem(x, y, image);
 		rect = new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
 	}
@@ -27,32 +27,32 @@ public class Bola
 	{
 		x += vx;
 		y += vy;
-		imagem.X = x;
-		imagem.Y = y;
-		rect.x = x;
-		rect.y = y;
+		imagem.X = (int) x;
+		imagem.Y = (int) y;
+		rect.x = (int) x;
+		rect.y = (int) y;
 	}
 
-	public int getX()
+	public double getX()
 	{
 		return x;
 	}
 
-	public int getY()
+	public double getY()
 	{
 		return y;
 	}
 
-	public void setX(int x)
+	public void setX(double x)
 	{
 		this.x = x;
-		imagem.X = x;
-		rect.x = x;
+		imagem.X = (int) x;
+		rect.x = (int) x;
 	}
-	public void setY(int y)
+	public void setY(double y)
 	{
 		this.y = y;
-		imagem.Y = y;
-		rect.y = y;
+		imagem.Y = (int) y;
+		rect.y = (int) y;
 	}
 }

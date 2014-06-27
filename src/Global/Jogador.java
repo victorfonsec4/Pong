@@ -8,9 +8,9 @@ public class Jogador
 	public int pontos;
 	public Imagem imagem;
 	public Rectangle rect;
-	private int x;
-	private int y;
-	private int dy = 0;
+	private double x;
+	private double y;
+	private double dy = 0;
 
 	public Jogador(int x, int y, Image image)
 	{
@@ -23,42 +23,42 @@ public class Jogador
 		rect = new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
 	}
 
-	public int getX()
+	public double getX()
 	{
 		return x;
 	}
 
-	public int getY()
+	public double getY()
 	{
 		return y;
 	}
 	
-	public int getdY()
+	public double getdY()
 	{
 		return dy;
 	}
 
-	public void setY(int y)
+	public void setY(double y)
 	{
 		this.y = y;
-		this.imagem.Y = y;
-		this.rect.y = y;
+		this.imagem.Y = (int) y;
+		this.rect.y = (int) y;
 	}
 
 	public void update()
 	{
 		this.setY(y + dy);
-		this.rect.y = y;
+		this.rect.y = (int) y;
 	}
 	
 	public void subir()
 	{
-		dy = -5;
+		dy = -3;
 	}
 
 	public void descer()
 	{
-		dy = 5;
+		dy = 3;
 	}
 
 	public void parar()

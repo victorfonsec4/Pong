@@ -50,8 +50,6 @@ public class Host extends Thread
 		
 		this.grafico = grafico;
 		this.tela = tela;
-
-		tela.add(grafico);
 		
 		subindo = false;
 		descendo = false;
@@ -90,7 +88,7 @@ public class Host extends Thread
 			draw();
 
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5);
 			} catch(InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
@@ -113,18 +111,18 @@ public class Host extends Thread
 		if(bola.rect.intersects(jogador1.rect))
 		{
 			bola.vx *= -1;
-			bola.vx += 1;
+			bola.vx += 1/2;
 			if (boost == true)
-				bola.vx += 2;
-			bola.vy = -(int)(jogador1.getY() - jogador1.rect.getHeight()/2 - bola.getY())/50;
+				bola.vx += 1;
+			bola.vy = -(jogador1.getY() + jogador1.rect.getHeight()/2 - bola.getY()-bola.rect.getHeight()/2)/30;
 		}
 		if(bola.rect.intersects(jogador2.rect))
 		{
 			bola.vx *= -1;
-			bola.vx -= 1;
+			bola.vx -= 1/2;
 			if(outroBoost == true)
-				bola.vx -= 2;
-			bola.vy = -(int)(jogador2.getY() - jogador2.rect.getHeight()/2 - bola.getY())/50;
+				bola.vx -= 1;
+			bola.vy = -(jogador2.getY() + jogador2.rect.getHeight()/2 - bola.getY()-bola.rect.getHeight()/2)/30;
 		}
 
 		//limites do movimento do jogador1;
@@ -134,20 +132,20 @@ public class Host extends Thread
 			jogador1.parar();
 
 		//sistema de pontuacao
-		if(bola.getX() < jogador1.getX())
+		if(bola.getX() < jogador1.getX() && !bola.rect.intersects(jogador1.rect))
 		{
 			bola.setX(grafico.getWidth()/2);
 			bola.setY(grafico.getHeight()/2);
-			bola.vx=3;
-			bola.vy=3;
+			bola.vx=2;
+			bola.vy=2;
 			jogador2.pontos++;
 		}
-		if(bola.getX() + bola.rect.width > jogador2.getX() + jogador2.rect.getWidth())
+		if(bola.getX() + bola.rect.width > jogador2.getX() + jogador2.rect.getWidth() && !bola.rect.intersects(jogador2.rect))
 		{
 			bola.setX(grafico.getWidth()/2);
 			bola.setY(grafico.getHeight()/2);
-			bola.vx=3;
-			bola.vy=3;
+			bola.vx=2;
+			bola.vy=2;
 			jogador1.pontos++;
 		}
 	}
