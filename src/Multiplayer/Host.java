@@ -67,7 +67,8 @@ public class Host extends Thread
 
 	public void run()
 	{
-		(new Comunicacao()).start();
+		(new Send()).start();
+		(new Listen()).start();
 		while(!terminar)
 		{
 			update();
@@ -178,9 +179,31 @@ public class Host extends Thread
 		}
 	}
 	
-	private class Comunicacao extends Thread
+	private class Send extends Thread
 	{
-		public Comunicacao() {
+		public Send() {
+		}
+		public void run()
+		{
+			while(true)
+			{
+				try {
+					outputstream.writeObject(jogador1.getY());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					this.sleep(5);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private class Listen extends Thread
+	{
+		public Listen() {
 		}
 		public void run()
 		{
@@ -191,11 +214,6 @@ public class Host extends Thread
 					jogador2.setY(posOutro);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					outputstream.writeObject(jogador1.getY());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

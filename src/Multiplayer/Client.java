@@ -31,7 +31,7 @@ public class Client extends Thread
 	{
 		System.err.println("Client");
 		try {
-			clientsocket=new Socket("localhost",5432);
+			clientsocket=new Socket("192.168.1.116",5432);
 			outputstream=new ObjectOutputStream(clientsocket.getOutputStream());
 			inputstream=new ObjectInputStream(clientsocket.getInputStream());
 		} catch (IOException e1) {
@@ -64,7 +64,8 @@ public class Client extends Thread
 
 	public void run()
 	{
-		(new Comunicacao()).start();
+		(new Send()).start();
+		(new Listen()).start();
 		while(!terminar)
 		{
 			update();
@@ -175,9 +176,9 @@ public class Client extends Thread
 		}
 	}
 	
-	private class Comunicacao extends Thread
+	private class Send extends Thread
 	{
-		public Comunicacao() {
+		public Send() {
 		}
 		public void run()
 		{
@@ -188,6 +189,23 @@ public class Client extends Thread
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				try {
+					this.sleep(5);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private class Listen extends Thread
+	{
+		public Listen() {
+		}
+		public void run()
+		{
+			while(true)
+			{
 				try {
 					posOutro=(Integer)inputstream.readObject();
 					jogador1.setY(posOutro);
