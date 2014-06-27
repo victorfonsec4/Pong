@@ -1,5 +1,6 @@
 package Main;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -23,7 +24,7 @@ public class PanelManager extends JFrame
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//tela cheia
+		this.setSize(new Dimension(1366, 768));
 		this.setVisible(true);
 
 		panelSP=new PanelJogo();
