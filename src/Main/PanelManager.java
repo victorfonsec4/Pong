@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Global.PanelJogo;
 import Multiplayer.*;
@@ -17,6 +18,7 @@ public class PanelManager extends JFrame
 	public PanelMenu menuPrincipal;
 	public ControleMenu controleMenu;
 	public PanelJogo panelSP,panelMPHost,panelMPClient;
+	public String ipString; 
 	public PanelManager() 
 	{
 		super("Pong");
@@ -37,6 +39,7 @@ public class PanelManager extends JFrame
 		controleMenu = new ControleMenu();
 
 		this.add(menuPrincipal);
+		ipString=JOptionPane.showInputDialog("Insira o IP do Servidor");
 
 		this.addKeyListener(controleMenu);
 	}
@@ -79,7 +82,7 @@ public class PanelManager extends JFrame
 				getContentPane().invalidate();
 				getContentPane().validate();
 				removeKeyListener(this);
-				new Client(panelMPClient,PanelManager.this).start();
+				new Client(panelMPClient,PanelManager.this,ipString).start();
 			}
 
 			if(e.getKeyCode() == KeyEvent.VK_ENTER && menuPrincipal.getOpcao() == 3)
