@@ -19,7 +19,7 @@ public class Host extends Thread
 	private Socket clientsocket;
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
-	private String comandoString;
+	private Integer posOutro;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
@@ -67,6 +67,7 @@ public class Host extends Thread
 
 	public void run()
 	{
+		(new Comunicacao()).start();
 		while(!terminar)
 		{
 			update();
@@ -82,31 +83,7 @@ public class Host extends Thread
 
 	private void update()
 	{
-		try {
-			comandoString=(String)inputstream.readObject();
-			if(comandoString.equals("parar"))
-				jogador2.parar();
-			else if (comandoString.equals("subir"))
-				jogador2.subir();
-			else if (comandoString.equals("descer"))
-				jogador2.descer();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			if(jogador1.getdY()==0)
-				outputstream.writeObject("parar");
-			else if(jogador1.getdY()==5)
-				outputstream.writeObject("descer");
-			else
-				outputstream.writeObject("subir");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		jogador1.update();
-		jogador2.update();
 		bola.update();
 
 		//logica de colisao da bola com as bordas
@@ -197,6 +174,31 @@ public class Host extends Thread
 				descendo = false;
 				if(!subindo)
 					jogador1.parar();
+			}
+		}
+	}
+	
+	private class Comunicacao extends Thread
+	{
+		public Comunicacao() {
+		}
+		public void run()
+		{
+			while(true)
+			{
+				try {
+					posOutro=(Integer)inputstream.readObject();
+					jogador2.setY(posOutro);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					outputstream.writeObject(jogador1.getY());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

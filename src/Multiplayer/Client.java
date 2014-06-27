@@ -18,7 +18,7 @@ public class Client extends Thread
 	private Socket clientsocket;
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
-	private String comandoString;
+	private Integer posOutro;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
@@ -31,7 +31,7 @@ public class Client extends Thread
 	{
 		System.err.println("Client");
 		try {
-			clientsocket=new Socket("192.168.1.116",5432);
+			clientsocket=new Socket("localhost",5432);
 			outputstream=new ObjectOutputStream(clientsocket.getOutputStream());
 			inputstream=new ObjectInputStream(clientsocket.getInputStream());
 		} catch (IOException e1) {
@@ -64,6 +64,7 @@ public class Client extends Thread
 
 	public void run()
 	{
+		(new Comunicacao()).start();
 		while(!terminar)
 		{
 			update();
@@ -79,30 +80,6 @@ public class Client extends Thread
 
 	private void update()
 	{
-		try {
-			if(jogador2.getdY()==0)
-				outputstream.writeObject("parar");
-			else if(jogador2.getdY()==5)
-				outputstream.writeObject("descer");
-			else
-				outputstream.writeObject("subir");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			comandoString=(String)inputstream.readObject();
-			if(comandoString.equals("parar"))
-				jogador1.parar();
-			else if (comandoString.equals("subir"))
-				jogador1.subir();
-			else if (comandoString.equals("descer"))
-				jogador1.descer();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		jogador1.update();
 		jogador2.update();
 		bola.update();
 
@@ -194,6 +171,31 @@ public class Client extends Thread
 				descendo = false;
 				if(!subindo)
 					jogador2.parar();
+			}
+		}
+	}
+	
+	private class Comunicacao extends Thread
+	{
+		public Comunicacao() {
+		}
+		public void run()
+		{
+			while(true)
+			{
+				try {
+					outputstream.writeObject(jogador2.getY());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					posOutro=(Integer)inputstream.readObject();
+					jogador1.setY(posOutro);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
