@@ -18,7 +18,6 @@ public class SinglePlayer extends Thread
 	PanelJogo grafico;
 	PanelManager tela;
 	Bola bola;
-	int numApertadas;
 	boolean subindo, descendo;
 	boolean terminar;
 
@@ -27,12 +26,15 @@ public class SinglePlayer extends Thread
 		this.grafico = grafico;
 		this.tela = tela;
 
+		tela.add(grafico);
+		
 		subindo = false;
 		descendo = false;
 		terminar = false;
 
 		tela.addKeyListener(new Controle());
 
+<<<<<<< HEAD
 		numApertadas = 0;
 
 			try
@@ -44,6 +46,16 @@ public class SinglePlayer extends Thread
 			catch(IOException e)
 			{
 			}
+=======
+		try
+		{
+			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
+			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
+			bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
+		} 
+		catch(IOException e)
+		{
+>>>>>>> 03cce34489cd6279a556e01fcbb1d9d03b5e3023
 		}
 
 		public void run()
@@ -93,7 +105,7 @@ public class SinglePlayer extends Thread
 		if(jogador1.getY() + jogador1.rect.height > grafico.getHeight())
 			jogador1.parar();
 
-		//sistema de pontuação
+		//sistema de pontuacao
 		if(bola.getX() < jogador1.getX())
 		{
 			bola.setX(grafico.getWidth()/2);
@@ -112,7 +124,7 @@ public class SinglePlayer extends Thread
 	{
 		grafico.desenhar(jogador1.imagem);
 		grafico.desenhar(jogador2.imagem);
-		grafico.desenharBola(bola.imagem.clone());
+		grafico.desenharBola(bola.imagem.Clone());
 
 		grafico.score(jogador1.pontos, jogador2.pontos);
 

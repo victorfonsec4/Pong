@@ -15,8 +15,8 @@ public class Imagem
 		this.Y = Y;
 		this.imagem = (BufferedImage) imagem;
 	}
-
-	public Imagem clone()
+	
+	public Imagem Clone()
 	{
 		return new Imagem(X, Y, imagem);
 	}

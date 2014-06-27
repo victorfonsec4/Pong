@@ -32,6 +32,11 @@ public class Jogador
 	{
 		return y;
 	}
+	
+	public int getdY()
+	{
+		return dy;
+	}
 
 	public void setY(int y)
 	{
