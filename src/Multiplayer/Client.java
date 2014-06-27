@@ -87,7 +87,7 @@ public class Client extends Thread
 			draw();
 
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5);
 			} catch(InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
