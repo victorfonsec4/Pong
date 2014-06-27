@@ -207,6 +207,10 @@ public class Host extends Thread
 			{
 				try {
 					outputstream.writeObject(jogador1.getY());
+					outputstream.writeObject(bola.getX());
+					outputstream.writeObject(bola.getY());
+					outputstream.writeObject(jogador1.pontos);
+					outputstream.writeObject(jogador2.pontos);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

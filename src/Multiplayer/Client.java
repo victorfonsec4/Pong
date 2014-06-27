@@ -19,6 +19,10 @@ public class Client extends Thread
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
 	private Integer posOutro=300;
+	private Integer xbola=100;
+	private Integer ybola=300;
+	private Integer j1p=300;
+	private Integer j2p=300;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
@@ -93,39 +97,16 @@ public class Client extends Thread
 	{
 		jogador1.setY(posOutro);
 		jogador2.update();
-		bola.update();
-
-		//logica de colisao da bola com as bordas
-		if(bola.getX() + bola.rect.width > grafico.size().width || bola.getX() < 0)
-			bola.vx *= -1;
-		if(bola.getY() + bola.rect.height > grafico.size().height || bola.getY() < 0)
-			bola.vy *= -1;
-		
-		//logica de colisao da bola com os jogadores
-		if(bola.rect.intersects(jogador1.rect))
-			bola.vx *= -1;
-		if(bola.rect.intersects(jogador2.rect))
-			bola.vx *= -1;
+		bola.setX(xbola);
+		bola.setY(ybola);
+		jogador1.pontos=j1p;
+		jogador2.pontos=j2p;
 		
 		//limites do movimento do jogador2;
 		if(jogador2.getY() < 0)
 			jogador2.parar();
 		if(jogador2.getY() + jogador2.rect.height > grafico.size().height)
 			jogador2.parar();
-
-		//sistema de pontuacao
-		if(bola.getX() < jogador1.getX())
-		{
-			bola.setX(grafico.getWidth()/2);
-			bola.setY(grafico.getHeight()/2);
-			jogador2.pontos++;
-		}
-		if(bola.getX() + bola.rect.width > jogador2.getX() + jogador2.rect.getWidth())
-		{
-			bola.setX(grafico.getWidth()/2);
-			bola.setY(grafico.getHeight()/2);
-			jogador1.pontos++;
-		}
 	}
 
 	private void draw()
@@ -233,6 +214,10 @@ public class Client extends Thread
 			{
 				try {
 					posOutro=(Integer)inputstream.readObject();
+					xbola=(Integer)inputstream.readObject();
+					ybola=(Integer)inputstream.readObject();
+					j1p=(Integer)inputstream.readObject();
+					j2p=(Integer)inputstream.readObject();
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
