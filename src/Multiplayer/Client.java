@@ -30,6 +30,9 @@ public class Client extends Thread
 	Bola bola;
 	boolean subindo, descendo;
 	boolean terminar,ready;
+	boolean apertouUP = false;
+	boolean apertouDOWN = false;
+	boolean boost = false;
 
 	public Client(PanelJogo grafico, PanelManager tela)
 	{
@@ -131,11 +134,17 @@ public class Client extends Thread
 			{
 				jogador2.subir();
 				subindo = true;
+				apertouUP=true;
 			}
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador2.getY() + jogador2.rect.height > grafico.size().height) )
 			{
 				jogador2.descer();
 				descendo = true;
+				apertouDOWN=true;
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_SPACE)
+			{
+				boost = true;
 			}
 			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 			{
@@ -152,6 +161,9 @@ public class Client extends Thread
 
 		public void keyReleased(KeyEvent e)
 		{
+			apertouDOWN = false;
+			apertouUP = false;
+			boost = false;
 			if(e.getKeyCode() == KeyEvent.VK_UP) 
 			{
 				subindo = false;
@@ -185,6 +197,9 @@ public class Client extends Thread
 			{
 				try {
 					outputstream.writeObject(jogador2.getY());
+					outputstream.writeObject(apertouUP);
+					outputstream.writeObject(apertouDOWN);
+					outputstream.writeObject(boost);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
