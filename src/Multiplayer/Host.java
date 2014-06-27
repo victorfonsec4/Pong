@@ -110,16 +110,16 @@ public class Host extends Thread
 		//logica de colisao da bola com os jogadores
 		if(bola.rect.intersects(jogador1.rect))
 		{
-			bola.vx *= -1.3;
+			bola.vx *= -1.1;
 			if (boost == true)
-				bola.vx *= 1.3;
+				bola.vx *= 1.1;
 			bola.vy = -(jogador1.getY() + jogador1.rect.getHeight()/2 - bola.getY()-bola.rect.getHeight()/2)/30;
 		}
 		if(bola.rect.intersects(jogador2.rect))
 		{
-			bola.vx *= -1.3;
+			bola.vx *= -1.1;
 			if(outroBoost == true)
-				bola.vx *= 1.3;
+				bola.vx *= 1.1;
 			bola.vy = -(jogador2.getY() + jogador2.rect.getHeight()/2 - bola.getY()-bola.rect.getHeight()/2)/30;
 		}
 
