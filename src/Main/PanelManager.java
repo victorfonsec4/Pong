@@ -6,14 +6,15 @@ import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 
 import Global.PanelJogo;
+import Multiplayer.*;
 import SinglePlayer.SinglePlayer;
 
 
 public class PanelManager extends JFrame
 {
 	public PanelMenu menuPrincipal;
-	PanelJogo telaJogoSP;
 	public ControleMenu controleMenu;
+	public PanelJogo panelSP,panelMPHost,panelMPClient;
 	public PanelManager() 
 	{
 		super("Pong");
@@ -24,8 +25,11 @@ public class PanelManager extends JFrame
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//tela cheia
 		this.setVisible(true);
 
+		panelSP=new PanelJogo();
+		panelMPHost=new PanelJogo();
+		panelMPClient=new PanelJogo();
+		
 		menuPrincipal = new PanelMenu();
-		telaJogoSP = new PanelJogo();
 
 		controleMenu = new ControleMenu();
 
@@ -48,17 +52,34 @@ public class PanelManager extends JFrame
 			if(e.getKeyCode() == KeyEvent.VK_ENTER && menuPrincipal.getOpcao() == 0)
 			{
 				getContentPane().remove(menuPrincipal);
-				add(telaJogoSP);
+				add(panelSP);
 				getContentPane().invalidate();
 				getContentPane().validate();
 				removeKeyListener(this);
-				new SinglePlayer(telaJogoSP, PanelManager.this).start();
+				new SinglePlayer(panelSP,PanelManager.this).start();
 			}
 
 			if(e.getKeyCode() == KeyEvent.VK_ENTER && menuPrincipal.getOpcao() == 1)
-				;
-
+			{
+				getContentPane().remove(menuPrincipal);
+				add(panelMPHost);
+				getContentPane().invalidate();
+				getContentPane().validate();
+				removeKeyListener(this);
+				new Host(panelMPHost,PanelManager.this).start();
+			}
+			
 			if(e.getKeyCode() == KeyEvent.VK_ENTER && menuPrincipal.getOpcao() == 2)
+			{
+				getContentPane().remove(menuPrincipal);
+				add(panelMPClient);
+				getContentPane().invalidate();
+				getContentPane().validate();
+				removeKeyListener(this);
+				new Client(panelMPClient,PanelManager.this).start();
+			}
+
+			if(e.getKeyCode() == KeyEvent.VK_ENTER && menuPrincipal.getOpcao() == 3)
 				dispose();
 		}
 	}

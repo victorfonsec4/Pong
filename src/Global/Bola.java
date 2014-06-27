@@ -1,4 +1,5 @@
 package Global;
+
 import java.awt.Image;
 import java.awt.Rectangle;
 
@@ -16,7 +17,7 @@ public class Bola
 	{
 		this.x = x;
 		this.y = y;
-		vx = 3;
+		vx = -3;
 		vy = 3;
 		imagem = new Imagem(x, y, image);
 		rect = new Rectangle(x, y, image.getWidth(null), image.getHeight(null));

@@ -11,8 +11,9 @@ import java.net.*;
 import javax.imageio.ImageIO;
 
 import Global.*;
+import Main.PanelManager;
 
-public class Host
+public class Host extends Thread
 {
 	private ServerSocket serversocket;
 	private Socket clientsocket;
@@ -22,10 +23,13 @@ public class Host
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
+	PanelManager tela;
 	Bola bola;
-	Info info;
+	boolean subindo, descendo;
+	boolean terminar;
+	
 
-	public Host()
+	public Host(PanelJogo grafico, PanelManager tela)
 	{
 		System.err.println("Host");
 		System.err.println("Esperando conexão");
@@ -39,30 +43,32 @@ public class Host
 		}
 		System.err.println("Conectado");
 		
-		info=new Info();
+		this.grafico = grafico;
+		this.tela = tela;
+
+		tela.add(grafico);
 		
-		grafico = new PanelJogo();
+		subindo = false;
+		descendo = false;
+		terminar = false;
 
-		grafico.setVisible(true);
-
-		grafico.addKeyListener(new Controle());
+		tela.addKeyListener(new Controle());
 
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
 			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
-			bola = new Bola(100, 300, ImageIO.read(new File("imagens/ball.jpg")));
+			bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
 		} 		
 		catch(IOException e)
 		{
 		}
 		System.err.println("Inicializado");
-		run();
 	}
 
-	private void run()
+	public void run()
 	{
-		while(true)
+		while(!terminar)
 		{
 			update();
 			draw();
@@ -91,11 +97,13 @@ public class Host
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		info.dy1=jogador1.getdY();
-		info.bolavx=bola.vx;
-		info.bolavy=bola.vy;
 		try {
-			outputstream.writeObject(info);
+			if(jogador1.getdY()==0)
+				outputstream.writeObject("parar");
+			else if(jogador1.getdY()==5)
+				outputstream.writeObject("descer");
+			else
+				outputstream.writeObject("subir");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -147,6 +155,8 @@ public class Host
 
 		grafico.executar = true;
 		grafico.repaint();
+		
+		tela.repaint();
 	}
 
 	private class Controle extends KeyAdapter 
@@ -154,19 +164,44 @@ public class Host
 		public void keyPressed(KeyEvent e)
 		{
 			if(e.getKeyCode() == KeyEvent.VK_UP && !(jogador1.getY() < 0))
+			{
 				jogador1.subir();
+				subindo = true;
+			}
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador1.getY() + jogador1.rect.height > grafico.size().height) )
+			{
 				jogador1.descer();
+				descendo = true;
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+			{
+				tela.getContentPane().remove(grafico);
+				tela.add(tela.menuPrincipal);
+				tela.getContentPane().invalidate();
+				tela.getContentPane().validate();
+				tela.removeKeyListener(this);
+				tela.addKeyListener(tela.controleMenu);
+				tela.repaint();
+				terminar = true;
+			}
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
-			jogador1.parar();
+			if(e.getKeyCode() == KeyEvent.VK_UP) 
+			{
+				subindo = false;
+				if(!descendo)
+					jogador1.parar();
+			}
+
+			else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+			{
+				descendo = false;
+				if(!subindo)
+					jogador1.parar();
+			}
 		}
-	}
-	public static void main(String args[])
-	{
-		Host host=new Host();
 	}
 
 }

@@ -19,7 +19,6 @@ public class SinglePlayer extends Thread
 	PanelJogo grafico;
 	PanelManager tela;
 	Bola bola;
-	int numApertadas;
 	boolean subindo, descendo;
 	boolean terminar;
 
@@ -28,13 +27,13 @@ public class SinglePlayer extends Thread
 		this.grafico = grafico;
 		this.tela = tela;
 
+		tela.add(grafico);
+		
 		subindo = false;
 		descendo = false;
 		terminar = false;
 
 		tela.addKeyListener(new Controle());
-
-		numApertadas = 0;
 
 		try
 		{

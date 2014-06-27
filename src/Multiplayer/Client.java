@@ -11,19 +11,23 @@ import java.net.*;
 import javax.imageio.ImageIO;
 
 import Global.*;
+import Main.PanelManager;
 
-public class Client
+public class Client extends Thread
 {
 	private Socket clientsocket;
 	private ObjectInputStream inputstream;
 	private ObjectOutputStream outputstream;
-	private Info info;
+	private String comandoString;
 	Jogador jogador1;
 	Jogador jogador2;
 	PanelJogo grafico;
+	PanelManager tela;
 	Bola bola;
+	boolean subindo, descendo;
+	boolean terminar;
 
-	public Client()
+	public Client(PanelJogo grafico, PanelManager tela)
 	{
 		System.err.println("Client");
 		try {
@@ -34,31 +38,34 @@ public class Client
 			e1.printStackTrace();
 		}
 		System.err.println("Conectado");
-		
-		info=new Info();
-		
-		grafico = new PanelJogo();
 
-		grafico.setVisible(true);
+		this.grafico = grafico;
+		this.tela = tela;
+		
+		tela.add(grafico);
+		
+		subindo = false;
+		descendo = false;
+		terminar = false;
 
-		grafico.addKeyListener(new Controle());
+		tela.addKeyListener(new Controle());
 
 		try
 		{
 			jogador1 = new Jogador(0, 300, ImageIO.read(new File("imagens/jogador.png")));
 			jogador2 = new Jogador(grafico.size().width - jogador1.rect.width, 300, ImageIO.read(new File("imagens/jogador.png")));
-			bola = new Bola(100, 300, ImageIO.read(new File("imagens/ball.jpg")));
+			bola = new Bola(100, 300, ImageIO.read(new File("imagens/bola.png")));
 		} 
 		catch(IOException e)
 		{
+			e.printStackTrace();
 		}
 		System.err.println("Inicializado");
-		run();
 	}
 
-	private void run()
+	public void run()
 	{
-		while(true)
+		while(!terminar)
 		{
 			update();
 			draw();
@@ -85,26 +92,35 @@ public class Client
 			e.printStackTrace();
 		}
 		try {
-			info=(Info)inputstream.readObject();
+			comandoString=(String)inputstream.readObject();
+			if(comandoString.equals("parar"))
+				jogador1.parar();
+			else if (comandoString.equals("subir"))
+				jogador1.subir();
+			else if (comandoString.equals("descer"))
+				jogador1.descer();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(info.dy1==0)
-			jogador1.parar();
-		else if(info.dy1==5)
-			jogador1.descer();
-		else if(info.dy1==-5)
-			jogador1.subir();
-		bola.vx=info.bolavx;
-		bola.vy=info.bolavy;
 		System.err.println("Falou");
 		jogador1.update();
 		jogador2.update();
 		bola.update();
 
-
+		//logica de colisao da bola com as bordas
+		if(bola.getX() + bola.rect.width > grafico.size().width || bola.getX() < 0)
+			bola.vx *= -1;
+		if(bola.getY() + bola.rect.height > grafico.size().height || bola.getY() < 0)
+			bola.vy *= -1;
+		
+		//logica de colisao da bola com os jogadores
+		if(bola.rect.intersects(jogador1.rect))
+			bola.vx *= -1;
+		if(bola.rect.intersects(jogador2.rect))
+			bola.vx *= -1;
+		
 		//limites do movimento do jogador2;
 		if(jogador2.getY() < 0)
 			jogador2.parar();
@@ -136,6 +152,8 @@ public class Client
 
 		grafico.executar = true;
 		grafico.repaint();
+		
+		tela.repaint();
 	}
 
 	private class Controle extends KeyAdapter 
@@ -143,20 +161,44 @@ public class Client
 		public void keyPressed(KeyEvent e)
 		{
 			if(e.getKeyCode() == KeyEvent.VK_UP && !(jogador2.getY() < 0))
+			{
 				jogador2.subir();
+				subindo = true;
+			}
 			else if(e.getKeyCode() == KeyEvent.VK_DOWN && ! (jogador2.getY() + jogador2.rect.height > grafico.size().height) )
+			{
 				jogador2.descer();
+				descendo = true;
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+			{
+				tela.getContentPane().remove(grafico);
+				tela.add(tela.menuPrincipal);
+				tela.getContentPane().invalidate();
+				tela.getContentPane().validate();
+				tela.removeKeyListener(this);
+				tela.addKeyListener(tela.controleMenu);
+				tela.repaint();
+				terminar = true;
+			}
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
-			jogador2.parar();
+			if(e.getKeyCode() == KeyEvent.VK_UP) 
+			{
+				subindo = false;
+				if(!descendo)
+					jogador2.parar();
+			}
+
+			else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+			{
+				descendo = false;
+				if(!subindo)
+					jogador2.parar();
+			}
 		}
 	}
-	public static void main(String args[])
-	{
-		Client client=new Client();
-	}
-
 
 }
