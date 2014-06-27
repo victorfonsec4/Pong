@@ -63,7 +63,6 @@ public class Host extends Thread
 		catch(IOException e)
 		{
 		}
-		System.err.println("Inicializado");
 	}
 
 	public void run()
@@ -83,7 +82,6 @@ public class Host extends Thread
 
 	private void update()
 	{
-		System.err.println("Tentando falar");
 		try {
 			comandoString=(String)inputstream.readObject();
 			if(comandoString.equals("parar"))
@@ -107,7 +105,6 @@ public class Host extends Thread
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.err.println("Falou");
 		jogador1.update();
 		jogador2.update();
 		bola.update();

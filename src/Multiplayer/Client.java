@@ -31,7 +31,7 @@ public class Client extends Thread
 	{
 		System.err.println("Client");
 		try {
-			clientsocket=new Socket("localhost",5432);
+			clientsocket=new Socket("192.168.1.116",5432);
 			outputstream=new ObjectOutputStream(clientsocket.getOutputStream());
 			inputstream=new ObjectInputStream(clientsocket.getInputStream());
 		} catch (IOException e1) {
@@ -60,7 +60,6 @@ public class Client extends Thread
 		{
 			e.printStackTrace();
 		}
-		System.err.println("Inicializado");
 	}
 
 	public void run()
@@ -80,7 +79,6 @@ public class Client extends Thread
 
 	private void update()
 	{
-		System.err.println("Tentando falar");
 		try {
 			if(jogador2.getdY()==0)
 				outputstream.writeObject("parar");
@@ -104,7 +102,6 @@ public class Client extends Thread
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.err.println("Falou");
 		jogador1.update();
 		jogador2.update();
 		bola.update();
