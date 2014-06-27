@@ -146,7 +146,7 @@ public class Client extends Thread
 	{
 		grafico.desenhar(jogador1.imagem);
 		grafico.desenhar(jogador2.imagem);
-		grafico.desenhar(bola.imagem.Clone());
+		grafico.desenharBola(bola.imagem.Clone());
 
 		grafico.score(jogador1.pontos, jogador2.pontos);
 
