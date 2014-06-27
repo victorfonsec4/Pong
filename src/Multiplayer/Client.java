@@ -34,11 +34,11 @@ public class Client extends Thread
 	boolean apertouDOWN = false;
 	boolean boost = false;
 
-	public Client(PanelJogo grafico, PanelManager tela)
+	public Client(PanelJogo grafico, PanelManager tela,String ipString)
 	{
 		System.err.println("Client");
 		try {
-			clientsocket=new Socket("192.168.1.116",5432);
+			clientsocket=new Socket(ipString,5432);
 			outputstream=new ObjectOutputStream(clientsocket.getOutputStream());
 			inputstream=new ObjectInputStream(clientsocket.getInputStream());
 		} catch (IOException e1) {
